@@ -1,5 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+
 
 /**routes */
 const userRouter = require('./routes/api/userRouter');
@@ -7,12 +9,11 @@ const postRouter = require('./routes/api/postRouter');
 const profileRouter = require('./routes/api/profileRouter');
 
 const app = express();
+/** body-parser */
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
-/**
- * @database    mongoose
- * @desc        blog_mern2 database
- * @access      Public
- */
+/** Connected mongoose */
 const db = require('./config/keys').mongoURI;
 mongoose.Promise = global.Promise;
 mongoose.connect(db, { useNewUrlParser: true, useCreateIndex: true})

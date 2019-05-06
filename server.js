@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-
+const passport = require('passport');
 
 /**routes */
 const userRouter = require('./routes/api/userRouter');
@@ -22,6 +22,12 @@ mongoose.connect(db, { useNewUrlParser: true, useCreateIndex: true})
 
     
 app.get('/', (req, res) => { res.send('Hello world')} );
+
+// passport middlewears
+app.use(passport.initialize()); // passport 초기화
+
+// passport config
+require('./config/passport')(passport);
 
 
 /**user routes */

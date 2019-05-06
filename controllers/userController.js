@@ -103,6 +103,13 @@ module.exports = {
                 
             })
             .catch(err => res.status(404).json(err));
+    },
+    current: async (req, res ) => {
+        res.json({
+            id: req.user.id,
+            name: req.user.name,
+            email: req.user.email
+        });
     }
 
         

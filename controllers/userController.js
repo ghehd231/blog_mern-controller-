@@ -4,6 +4,10 @@ const bcrypt = require('bcryptjs');
 // Call User Model
 const userModel = require('../models/userModel');
 
+// Use jsonWebToken
+const jwt = require('jsonwebtoken');
+const keys = require('../config/keys');
+
 module.exports = {
     test: async (req, res) => {
         res.status(200).json({message: "User Works!"})

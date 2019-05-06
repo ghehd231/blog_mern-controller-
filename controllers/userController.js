@@ -8,6 +8,10 @@ const userModel = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 const keys = require('../config/keys');
 
+// Use validation
+const validateRegistInput = require('../validation/registerValidation');
+const validateLoginInput = require('../validation/loginValidation');
+
 module.exports = {
     test: async (req, res) => {
         res.status(200).json({message: "User Works!"})
@@ -19,11 +23,18 @@ module.exports = {
      * @access      Public
      */
     register: async (req, res) => {
+
+        const {errors, isValid} = validateRegisterInput(req.body);
+
+        if(!isValid){
+            return res.status(400).json(errors);
+        }
         userModel
             .findOne({email: req.body.email})
             .then(user => {
                 if(user){
-                    return res.status(400).json({message: "This email already exists."});
+                    errors.email = "Email already exists";
+                    return res.status(400).json(errors);
                 }
 
                 /** Create new avatar */
